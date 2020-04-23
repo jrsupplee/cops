@@ -127,6 +127,16 @@
     $config['cops_generate_invalid_opds_stream'] = '0';
 
     /*
+     * Default page to display on a feed.
+     *
+     * See lib/Base.php for available values
+     *
+     * 'index' : default index page
+     * '4'     : display all books in the collection
+     *      */
+    $config['cops_feed_default_page'] = 'index';
+
+    /*
      * Max number of items per page
      * -1 unlimited
      */

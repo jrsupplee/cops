@@ -10,8 +10,12 @@
     require_once 'config.php';
     require_once 'base.php';
 
+    # Make sure the feed page default has a value
+    if (!array_key_exists('cops_feed_page_default', $config)) {
+        $config['cops_feed_page_default'] = Base::PAGE_INDEX;
+    }
     header('Content-Type:application/xml');
-    $page = getURLParam('page', Base::PAGE_INDEX);
+    $page = getURLParam('page', $config['cops_feed_page_default']);
     $query = getURLParam('query');
     $n = getURLParam('n', '1');
     if ($query) {
