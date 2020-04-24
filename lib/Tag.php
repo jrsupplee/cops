@@ -42,6 +42,15 @@ class Tag extends Base
         return NULL;
     }
 
+    public static function getTagByName ($tagName) {
+        $result = parent::getDb ()->prepare('select id, name  from tags where name = ?');
+        $result->execute (array ($tagName));
+        if ($post = $result->fetchObject ()) {
+            return new Tag ($post);
+        }
+        return NULL;
+    }
+
     public static function getAllTags() {
         return Base::getEntryArrayWithBookNumber (self::SQL_ALL_TAGS, self::TAG_COLUMNS, array (), "Tag");
     }

@@ -133,8 +133,18 @@
      *
      * 'index' : default index page
      * '4'     : display all books in the collection
+     * '12'    : display tag detail
      *      */
     $config['cops_feed_default_page'] = 'index';
+
+    /*
+     * Default tag name to display for a feed.
+     *
+     * This option can be used in conjunction with the cops_feed_default_page
+     * to default to displaying books for a chosen tag.
+     *
+     */
+    $config['cops_feed_default_tag'] = '';
 
     /*
      * Max number of items per page

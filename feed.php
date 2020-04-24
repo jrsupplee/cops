@@ -10,18 +10,28 @@
     require_once 'config.php';
     require_once 'base.php';
 
-    # Make sure the feed page default has a value
-    if (!array_key_exists('cops_feed_default_page', $config)) {
-        $config['cops_feed_default_page'] = Base::PAGE_INDEX;
-    }
     header('Content-Type:application/xml');
-    $page = getURLParam('page', $config['cops_feed_default_page']);
+    $page = getURLParam('page', empty($config['cops_feed_default_page']) ? Base::PAGE_INDEX : $config['cops_feed_default_page']);
     $query = getURLParam('query');
     $n = getURLParam('n', '1');
+    $tag_name = getURLParam('tagName');
+    if (empty($tag_name) && $page == Base::PAGE_TAG_DETAIL && !empty($config['cops_feed_default_tag'])) {
+        $tag_name = $config['cops_feed_default_tag'];
+    }
+
     if ($query) {
         $page = Base::PAGE_OPENSEARCH_QUERY;
+
+    } elseif ($tag_name) {
+        $tag = Tag::getTagByName($tag_name);
+        if ($tag) {
+            $page = Base::PAGE_TAG_DETAIL;
+            $qid = $tag->id;
+        }
+
+    } else {
+        $qid = getURLParam('id');
     }
-    $qid = getURLParam('id');
 
     if ($config ['cops_fetch_protect'] == '1') {
         session_start();
